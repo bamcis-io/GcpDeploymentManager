@@ -1,0 +1,43 @@
+﻿info: 
+  title: Subnets Template
+  author: Michael Haken
+  description: Creates new subnets in a VPC
+  version: 1.0.0
+
+required:
+- subnets
+- network
+
+properties:
+  network:
+    type: string
+    description: The VPC the subnets will be deployed into
+
+  subnets:
+    type: array
+    description: The subnets to create
+    items:
+      type: object
+      description: A subnet that will be created
+      required:
+      - ipv4-cidr
+      - name
+      - region
+      properties:
+        ipv4-cidr:
+          type: string
+          description: The IPv4 CIDR block the subnet will use
+        name:
+          type: string
+          description: The name of the subnet
+        region:
+          type: string
+          description: The GCP region to create the subnet in
+        private-google-access:
+          type: boolean
+          description: Whether the VMs in the created subnets can access Google services without assigned external IP addresses.
+          default: true
+        description:
+          type: string
+          description: The description for the subnet
+          default: ""

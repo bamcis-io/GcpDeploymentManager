@@ -1,0 +1,9 @@
+imports:
+- path: ../Project/dmproject/deployment-project.jinja
+  name: project.jinja
+
+resources:
+- name: dm-project
+  type: project.jinja
+  properties:
+    folder-id: "123456789012"

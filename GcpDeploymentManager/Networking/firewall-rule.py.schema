@@ -1,0 +1,94 @@
+info: 
+  title: Inbound Firewall Rule Template
+  author: Michael Haken
+  description: Creates a new inbound firewall rule
+  version: 1.0.0
+
+required:
+  - rules
+
+properties:
+  network:
+    type: string
+    description: The network this rule applies to
+
+  source:
+    type: array
+    description: The source IP addresses of the allowed traffic
+    items:
+      type: string
+
+  source-tags-filter:
+    type: array
+    description: The source tags this rule will allow to the destination for an INGRESS rule
+    items:
+      type: string
+
+  target-tags:
+    type: array
+    description: The tags on instances this rule will apply to
+    items:
+      type: string
+
+  source-service-accounts-filter:
+    type: array
+    description: The source service accounts this rule will allow to the destination for an INGRESS rule
+    items:
+      type: string
+      pattern: ^\S+?@\S+?\.[a-zA-Z]{2,}$
+
+  target-service-accounts:
+    type: array
+    description: The service accounts that this rule will apply to
+    items:
+      type: string
+      pattern: ^\S+?@\S+?\.[a-zA-Z]{2,}$
+
+  destination:
+    type: array
+    description: The destination IP addresses of the allowed traffic
+    items:
+      type: string
+
+  direction:
+    type: string
+    enum:
+    - INGRESS
+    - EGRESS
+    default: INGRESS
+
+  description:
+    type: string
+    description: A description for the rule
+
+  priority:
+    type: number
+    description: The priority of the rule between 0 and 65535, both inclusive
+    default: 1000
+    minimum: 0
+    maximum: 65535
+
+  rules:
+    type: array
+    items:
+      type: object
+      required:
+      - IPProtocol
+      properties:
+        IPProtocol:
+          type: string
+          enum:
+          - tcp
+          - udp
+          - icmp
+          - all
+        ports:
+          type: array
+          items:
+            type: string
+
+  depends-on:
+    type: array
+    description: A list of resources this resource depends on
+    items:
+      type: string

@@ -1,0 +1,10 @@
+resources:
+- name: {{ env["deployment"] }}-{{ env["name"] }}
+  type: compute.beta.address
+  properties: 
+      address: {{ properties["address"] }}
+      addressType: {{ properties["type"] }}
+      description: {{ properties["description"] }}
+      ipVersion: {{ properties["ip-version"] }}
+      subnetwork: projects/{{ env["project"] }}/regions/{{ properties["region"] }}/subnetworks/{{ properties["subnet"] }}
+      region: {{ properties["region"] }}

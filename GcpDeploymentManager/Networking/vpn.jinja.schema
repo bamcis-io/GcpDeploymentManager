@@ -1,0 +1,51 @@
+info: 
+  title: VPN Template
+  author: Michael Haken
+  description: Creates a new VPN in the shared VPC
+  version: 1.0.0
+
+required:
+  - network-id
+  - region
+  - peer-ip
+  - shared-secret
+  - gcp-subnet-cidr
+  - on-premises-cidr
+
+properties:
+
+  network-id:
+    type: string
+    description: The id of the VPC to associate the VPN with
+
+  region:
+    type: string
+    description: The region the VPN will be deployed in
+
+  ike-version:
+    type: integer
+    description: IKE version supported by peer VPN gateway
+    enum:
+      - 1
+      - 2
+    default: 2
+
+  peer-ip:
+    type: string
+    description: IPv4 addresss of the peer VPN gateway
+
+  shared-secret:
+    type: string
+    description: Shared secret for the peer VPN gateway
+
+  gcp-subnet-cidr:
+    type: array
+    description: The local side of the Google VPN
+    items:
+      type: string
+  
+  on-premises-cidr:
+    type: array
+    description: The on-premises IP spaces that will use the VPN
+    items:
+      type: string

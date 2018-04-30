@@ -1,0 +1,124 @@
+info: 
+  title: Consolidate Logging Template
+  author: Michael Haken
+  description: Creates a new logging setup to deliver StackDriver logs to a consolidated PubSub subscription
+  version: 1.0.0
+
+imports:
+  - path: ../IAM/policy.py
+    name: policy.py
+
+required:
+  - topic
+  - subscription
+  - service-account
+
+properties:
+  topic:
+    type: string
+    description: The name of the pubsub topic
+
+  subscription:
+    type: string
+    description: The name of the pubsub subscription
+
+  sink:
+    type: string
+    description: The name of logging sink
+
+  organization-id:
+    type: string
+    description: The ID of the organization to create the sink for. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  folder-id:
+    type: string
+    description: The ID of the folder to create the sink for. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  service-account:
+    type: string
+    description: The name of the service account to create that will be used to read from the pubsub subscription.
+
+  service-account-display-name:
+    type: string
+    description: The display name to assign to the service account. This will default to the service-account name.
+
+  pubsub-topic-iam-policy:
+    description: >
+      The IAM policy to apply to the pubsub topic. This is optional. The template
+      will automatically add/merge in the project service account as the pubsub admin.
+    type: object
+    items:
+      required:
+      - bindings
+      properties:
+        bindings:
+          description: >
+            Bindings of members to roles.
+          type: array
+          items:
+            description: >
+              A set of members bound to a particular role.
+            type: object
+            item:
+              required:
+              - role
+              - members
+              role:
+                description: >
+                  The role that all the members will receive.
+                type: string
+                pattern: ^roles/
+              members:
+                decription: >
+                  The members that will be given the permissions in role.
+                type: array
+                item:
+                  type: string
+                  pattern: "^(user|group|domain|serviceAccount):"
+
+  pubsub-subscription-iam-policy:
+    description: >
+      The IAM policy to apply to the pubsub subscription. This is optional. The template
+      will automatically add/merge in the project service account as the pubsub admin.
+    type: object
+    items:
+      required:
+      - bindings
+      properties:
+        bindings:
+          description: >
+            Bindings of members to roles.
+          type: array
+          items:
+            description: >
+              A set of members bound to a particular role.
+            type: object
+            item:
+              required:
+              - role
+              - members
+              role:
+                description: >
+                  The role that all the members will receive.
+                type: string
+                pattern: ^roles/
+              members:
+                decription: >
+                  The members that will be given the permissions in role.
+                type: array
+                item:
+                  type: string
+                  pattern: "^(user|group|domain|serviceAccount):"
+
+  log-filter:
+    type: string
+    description: An optional filter to apply to the logging sink
+    default: "severity>=NOTICE"
+
+outputs:
+  properties:
+  - writerIdentity:
+    description: The writer identity of the log sink that needs to be granted permissions on the destination
+    type: string

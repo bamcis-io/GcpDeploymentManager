@@ -1,0 +1,59 @@
+{#
+  Need to enable deployment management API manually ("deploymentmanager") 
+  as well as make the service account an IAM administrator on the organization
+  so we can run this. You can remove the IAM permissions for the service account
+  after running the dm script
+#}
+
+resources:
+    # This will already be enabled so that we can run the dm script
+  - name: deploymentmanager
+    type: deploymentmanager.v2.virtual.enableService
+    properties:
+      consumerId: project:{{ env["project"] }}
+      serviceName: deploymentmanager.googleapis.com
+
+  - name: cloudresourcemanager
+    type: deploymentmanager.v2.virtual.enableService
+    properties:
+      consumerId: project:{{ env["project"] }}
+      serviceName: cloudresourcemanager.googleapis.com
+
+  - name: cloudbilling
+    type: deploymentmanager.v2.virtual.enableService
+    properties:
+      consumerId: project:{{ env["project"] }}
+      serviceName: cloudbilling.googleapis.com
+
+  - name: iam
+    type: deploymentmanager.v2.virtual.enableService
+    properties:
+      consumerId: project:{{ env["project"] }}
+      serviceName: iam.googleapis.com
+
+  - name: servicemanagement
+    type: deploymentmanager.v2.virtual.enableService
+    properties:
+      consumerId: project:{{ env["project"] }}
+      serviceName: servicemanagement.googleapis.com
+
+  - name: project-policy
+    type: policy.py
+    properties:
+      type: project
+      id: {{ env["project"] }}
+      policy: 
+        add:
+        - role: roles/deploymentmanager.editor
+          members: {{ properties["project-creators"] }}
+
+  - name: org-policy
+    type: policy.py
+    properties:
+      type: organization
+      id: {{ properties["organization-id"] }}
+      policy:
+        add:
+        - role: roles/compute.xpnAdmin
+          members:
+          - serviceAccount:{{ env["project_number"] }}@cloudservices.gserviceaccount.com

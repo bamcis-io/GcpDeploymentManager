@@ -1,0 +1,12 @@
+imports:
+- path: ../Project/xpn/xpn-host-enable.jinja
+  name: xpn.jinja
+
+resources:
+- name: xpn-host
+  type: xpn.jinja
+  properties:
+    project-id: "bamcis-xpn-project"
+
+# run this after to put a lien on the XPN project
+# gcloud alpha resource-manager org-policies enable-enforce --organization "123456789012" compute.restrictXpnProjectLienRemoval

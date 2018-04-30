@@ -1,0 +1,15 @@
+resources:
+  - name: get-organization-policy
+    action: gcp-types/cloudresourcemanager-v1:cloudresourcemanager.organizations.getIamPolicy
+    properties:
+      resource: organizations/{{ properties["organization-id"] }}
+      
+  - name: set-organization-policy
+    action: gcp-types/cloudresourcemanager-v1:cloudresourcemanager.organizations.setIamPolicy
+    properties:
+      resource: organizations/{{ properties["organization-id"] }}
+      policy: $(ref.get-organization-policy)
+      gcpIamPolicyPatch:
+        add:
+          - role: roles/compute.xpnAdmin
+            members: {{ properties["xpn-admins"] }}

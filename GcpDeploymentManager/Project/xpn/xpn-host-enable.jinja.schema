@@ -1,0 +1,14 @@
+info: 
+  title: Cross Project Networking Host Project
+  author: Michael Haken
+  description: Enables cross project networking (xpn) for a host project that already exists
+  version: 1.0.0
+
+required:
+  - project-id
+
+properties:
+  project-id:
+    type: string
+    description: The id of the project that is going to be enabled as a shared vpc host
+    pattern: ^[a-z0-9][-a-z0-9]{1,253}[a-z0-9]$

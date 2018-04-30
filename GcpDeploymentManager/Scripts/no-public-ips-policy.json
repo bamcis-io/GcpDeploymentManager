@@ -1,0 +1,8 @@
+﻿{
+  "constraint": "constraints/compute.vmExternalIpAccess",
+  "listPolicy": {
+    "allowedValues": [
+      "projects/none/zones/us-east1-b/instances/&"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+info: 
+  title: PubSub Subscription Template
+  author: Michael Haken
+  description: Creates a new pubsub subscription
+  version: 1.0.0
+
+import:
+
+required:
+  - topic
+
+properties:
+
+  topic:
+    description: The name of the pubsub topic to subscribe to
+    type: string
+
+  iam-policy:
+    description: >
+      The IAM policy to apply to the pubsub subscription. This is optional.
+    type: object
+    items:
+      required:
+      - bindings
+      properties:
+        bindings:
+          description: >
+            Bindings of members to roles.
+          type: array
+          items:
+            description: >
+              A set of members bound to a particular role.
+            type: object
+            item:
+              required:
+              - role
+              - members
+              role:
+                description: >
+                  The role that all the members will receive.
+                type: string
+                pattern: ^roles/
+              members:
+                decription: >
+                  The members that will be given the permissions in role.
+                type: array
+                item:
+                  type: string
+                  pattern: "^(user|group|domain|serviceAccount):"

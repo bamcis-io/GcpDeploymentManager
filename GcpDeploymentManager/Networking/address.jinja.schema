@@ -1,0 +1,48 @@
+info: 
+  title: Static Internal IP Address Template
+  author: Michael Haken
+  description: Creates a static IP address
+  version: 1.0.0
+
+imports:
+  - path: address.jinja
+    name: address.jinja
+
+required:
+  - subnet
+  - address
+
+properties:
+  region:
+    type: string
+    description: The region the subnet is located in, the defaults to us-east1
+    default: us-east1
+
+  subnet:
+    type: string
+    description: The subnet id this static IP address is a part of
+
+  address:
+    type: string
+    description: The static IP address
+
+  description:
+    type: string
+    description: A description of the address
+    default: ""
+
+  type:
+    type: string
+    description: The address type
+    enum:
+    - EXTERNAL
+    - INTERNAL
+    default: EXTERNAL
+
+  ip-version:
+    type: string
+    description: The IP version to use
+    enum:
+    - IPV4
+    - IPV6
+    default: IPV4

@@ -1,0 +1,26 @@
+info: 
+  title: Project Deployment Template
+  author: Michael Haken
+  description: Sets the APIs and permissions for the project deployment project
+  version: 1.0.0
+
+imports:
+  - path: ../../IAM/policy.py
+    name: policy.py
+
+required:
+  - organization-id
+
+properties:
+
+  organization-id:
+    type: string
+    description: The ID of the organization that the projects will be under. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  project-creators:
+    type: array
+    description: The users, groups, or service accounts that can use deployment manager to create new projects
+    items:
+      type: string
+      pattern: ^(user|group|serviceAccount):\S+?@\S+?\.[a-zA-Z]{2,}$

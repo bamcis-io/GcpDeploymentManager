@@ -1,0 +1,60 @@
+info: 
+  title: Logging Sink Template
+  author: Michael Haken
+  description: Creates a new logging sink at the organization or folder level
+  version: 1.0.0
+
+required:
+  - destination
+
+properties:
+  name:
+    type: string
+    description: The name of the sink. If this isn't specified, the resource name or deployment name is used.
+
+  organization-id:
+    type: string
+    description: The ID of the organization to create the sink for. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  folder-id:
+    type: string
+    description: The ID of the folder to create the sink for. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  billing-id:
+    type: string
+    description: The ID of the billing account to create the sink for.
+    pattern: ^([a-zA-Z0-9])([-a-zA-Z0-9]+)?([a-zA-Z0-9])$
+
+  filter:
+    type: string
+    description: >
+      An advanced logs filter. The only exported log entries are those that are in the resource owning the sink and that match the filter.
+      For example: logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND severity>=ERROR
+      Filtering out DEBUG and INFO level messages recommended especially in GKE environments where STDOUT from containers is logged at INFO level.
+
+  include-children:
+    type: boolean
+    description: >
+      This field applies only to sinks owned by organizations and folders. If the field is false, 
+      the default, only the logs owned by the sink's parent resource are available for export. 
+      If the field is true, then logs from all the projects, folders, and billing accounts contained in the 
+      sink's parent resource are also available for export. 
+    default: False
+
+  destination:
+    type: string
+    description: The destination of the logs
+    pattern: ^(?:storage|bigquery|pubsub)\.googleapis\.com/.*$
+
+  cross-project:
+    type: boolean
+    description: Specifies that the destination is in a different project than the sink
+    default: False
+
+outputs:
+  properties:
+  - writerIdentity:
+    description: The writer identity of the log sink that needs to be granted permissions on the destination
+    type: string

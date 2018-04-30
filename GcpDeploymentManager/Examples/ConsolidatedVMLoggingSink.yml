@@ -1,0 +1,11 @@
+imports:
+- path: ../Logging/logging-sink.py
+  name: logging.py
+
+resources:
+- name: vm-logging-sink
+  type: logging.py
+  properties:
+    filter: resource.type = "gce_instance"
+    destination: pubsub.googleapis.com/projects/bamcis-project/topics/vm-logging-topic
+    cross-project: True

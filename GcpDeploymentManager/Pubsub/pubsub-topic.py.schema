@@ -1,0 +1,41 @@
+info: 
+  title: PubSub Topic Template
+  author: Michael Haken
+  description: Creates a new pubsub topic
+  version: 1.0.0
+
+properties:
+  iam-policy:
+    description: >
+      The IAM policy to apply to the pubsub topic. This is optional. The template
+      will automatically add/merge in the service account making the project
+      as an owner.
+    type: object
+    items:
+      required:
+      - bindings
+      properties:
+        bindings:
+          description: >
+            Bindings of members to roles.
+          type: array
+          items:
+            description: >
+              A set of members bound to a particular role.
+            type: object
+            item:
+              required:
+              - role
+              - members
+              role:
+                description: >
+                  The role that all the members will receive.
+                type: string
+                pattern: ^roles/
+              members:
+                decription: >
+                  The members that will be given the permissions in role.
+                type: array
+                item:
+                  type: string
+                  pattern: "^(user|group|domain|serviceAccount):"

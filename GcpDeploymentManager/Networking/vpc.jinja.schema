@@ -1,0 +1,22 @@
+info: 
+  title: VPC Template
+  author: Michael Haken
+  description: Creates a new VPC
+  version: 1.0.0
+
+properties:
+  description:
+    type: string
+    description: The description for the VPC
+
+  auto-create-subnets:
+    type: boolean
+    description: Whether the VPC should auto create the standard subnets
+    default: true
+
+   routing-mode:
+    type: string
+    default: REGIONAL
+    enum:
+    - REGIONAL
+    - GLOBAL

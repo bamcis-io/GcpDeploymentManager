@@ -1,0 +1,61 @@
+info: 
+  title: Routes Template
+  author: Michael Haken
+  description: Creates new routes in a network
+  version: 1.0.0
+
+import:
+  - path: routes.py
+    name: routes.py
+
+required:
+  - routes
+
+properties:
+  depends-on:
+    description: Resources the routes depend on
+    type: array
+    items:
+      type: string
+
+  routes:
+    description: The routes to associate with the new network
+    type: array
+    items:
+      type: object
+      description: An individual route to associate with the network
+      required:
+      - network
+      - destination
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the route
+          pattern: ^[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?$
+        description:
+           type: string
+          description: An optional description of this route
+        network:
+          type: string
+          description: Fully-qualified URL of the network that this route applies to
+        destinaton:
+          type: string
+          description: The destination range of outgoing packets that this route applies to. Only IPv4 is supported.
+        priority:
+          type: number
+          description: The priority of this route. Priority is used to break ties in cases where there is more than one matching route of equal prefix length. In the case of two routes with equal prefix length, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.
+          default: 1000
+        tags:
+          type: array
+          description: A list of instance tags to which this route applies.
+          items:
+            type: string
+        next-hop-gateway:
+          type: [string, null]
+        next-hop-instance:
+          type: [string, null]
+        next-hop-ip:
+          type: [string, null]
+        next-hop-vpn:
+          type: [string, null]

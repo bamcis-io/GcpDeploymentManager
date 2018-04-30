@@ -1,0 +1,29 @@
+﻿auditConfigs:
+- service: storage.googleapis.com
+  auditLogConfigs:
+  - logType: ADMIN_READ
+  - logType: DATA_READ
+  - logType: DATA_WRITE
+bindings:
+- members:
+  - group:os-login@example.com
+  role: roles/compute.osAdminLogin
+- members:
+  - group:os-login@example.com
+  role: roles/iam.serviceAccountUser
+- members:
+  - group:project-owners@example.com
+  role: roles/owner
+- members:
+  - group:folder-admins@example.com
+  role: roles/resourcemanager.folderAdmin
+- members:
+  - serviceAccount:123456789012@cloudservices.gserviceaccount.com
+  role: roles/resourcemanager.projectCreator
+- members:
+  - serviceAccount:123456789012@cloudservices.gserviceaccount.com
+  role: roles/resourcemanager.projectDeleter
+- members:
+  - group:project-viewers@example.com
+  role: roles/viewer
+etag: BwVirNFFLwU=

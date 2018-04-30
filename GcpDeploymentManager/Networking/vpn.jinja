@@ -1,0 +1,65 @@
+resources:
+  - name: {{ env["deployment"] }}-gateway
+    type: compute.v1.targetVpnGateway
+    properties:
+      region: {{ properties["region"] }}
+      network: projects/{{ env["project"] }}/global/networks/{{ properties["network-id"] }}
+
+## STATIC IP
+  - name: {{ env["deployment"] }}-address
+    type: compute.v1.address
+    properties:
+      region: {{ properties["region"] }}
+
+## FORWARDING RULES - ESP
+  - name: {{ env["deployment"] }}-fr-esp
+    type: compute.v1.forwardingRules
+    properties:
+      region: {{ properties["region"] }}
+      IPProtocol: ESP
+      IPAddress: $(ref.{{ env["deployment"] }}-address.address)
+      target: $(ref.{{ env["deployment"] }}-gateway.selfLink)
+
+## FORWARDING RULES - UDP 500
+  - name: {{ env["deployment"] }}-fr-udp500
+    type: compute.v1.forwardingRules
+    properties:
+      region: {{ properties["region"] }}
+      IPProtocol: UDP
+      portRange: 500
+      IPAddress: $(ref.{{ env["deployment"] }}-address.address)
+      target: $(ref.{{ env["deployment"] }}-gateway.selfLink)
+
+## FORWARDING RULES - UDP 4500
+  - name: {{ env["deployment"] }}-fr-udp4500
+    type: compute.v1.forwardingRules
+    properties:
+      region: {{ properties["region"] }}
+      IPProtocol: UDP
+      portRange: 4500
+      IPAddress: $(ref.{{ env["deployment"] }}-address.address)      
+      target: $(ref.{{ env["deployment"] }}-gateway.selfLink)
+
+  - name: {{ env["deployment"] }}-tunnel
+    type: compute.v1.vpnTunnel
+    properties:
+      region: {{ properties["region"] }}
+      ikeVersion: {{ properties["ike-version"] }}
+      peerIp: {{ properties["peer-ip"] }}
+      sharedSecret: {{ properties["shared-secret"] }}
+      targetVpnGateway: $(ref.{{ env["deployment"] }}-gateway.selfLink)
+      localTrafficSelector: {{ properties["gcp-subnet-cidr"] }}
+      remoteTrafficSelector: {{ properties["on-premises-cidr"] }}
+    metadata:
+      dependsOn:
+      - {{ env["deployment"] }}-fr-esp
+      - {{ env["deployment"] }}-fr-udp500
+      - {{ env["deployment"] }}-fr-udp4500
+
+  - name: {{ env["deployment"] }}-default-route
+    type: compute.v1.route
+    properties:
+      network: projects/{{ env["project"] }}/global/networks/{{ properties["network-id"] }}
+      nextHopVpnTunnel: $(ref.{{ env["deployment"] }}-tunnel.selfLink)
+      priority: 100
+      destRange: {{ properties["on-premises-cidr"] }}

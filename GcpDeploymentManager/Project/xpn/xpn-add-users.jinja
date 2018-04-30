@@ -1,0 +1,15 @@
+resources:
+  - name: get-subnets-policy
+    action: gcp-types/cloudresourcemanager-v1:cloudresourcemanager.projects.getIamPolicy
+    properties:
+      resource: subnets/{{ properties["subnet-id"] }}
+      
+  - name: set-subnets-policy
+    action: gcp-types/cloudresourcemanager-v1:cloudresourcemanager.projects.setIamPolicy
+    properties:
+      resource: subnets/{{ properties["subnet-id"] }}
+      policy: $(ref.get-subnets-policy)
+      gcpIamPolicyPatch:
+        add:
+          - role: roles/compute.networkUser
+            members: {{ properties["xpn-users"] }}

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>9598639e-13cd-4f65-9d82-dfbe9552584e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>GcpDeploymentManager</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Examples\AuditConfigGCS-cli.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\AuditConfigGCS.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\ConsolidatedLogging.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\ConsolidatedVMLogging.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\ProjectDeploymentProject.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\SandboxProject.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\ServiceAccount.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\SharedVPCHostSetup.yml" />
+    <None Include="$(MSBuildThisFileDirectory)Examples\Vpn.yml" />
+    <None Include="$(MSBuildThisFileDirectory)IAM\policy.py" />
+    <None Include="$(MSBuildThisFileDirectory)IAM\policy.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)IAM\service-accounts.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\consolidated-logging-existing-sa.py" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\consolidated-logging-existing-sa.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\consolidated-logging.py" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\consolidated-logging.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\logging-sink.py" />
+    <None Include="$(MSBuildThisFileDirectory)Logging\logging-sink.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\address.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\address.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\firewall-rule.py" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\firewall-rule.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\routes.py" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\routes.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\subnets.py" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\subnets.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\vpn.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\vpn.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\vpc.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Networking\vpc.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\project.py" />
+    <None Include="$(MSBuildThisFileDirectory)Project\project.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\project-apis.py" />
+    <None Include="$(MSBuildThisFileDirectory)IAM\service-accounts.py" />
+    <None Include="$(MSBuildThisFileDirectory)Project\dmproject\deployment-project.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Project\dmproject\deployment-project.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\project-apis.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-add-users.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-add-users.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-admins.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-admins.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-host-enable.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-host-enable.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-resource-enable.jinja" />
+    <None Include="$(MSBuildThisFileDirectory)Project\xpn\xpn-resource-enable.jinja.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Pubsub\pubsub-subscription.py" />
+    <None Include="$(MSBuildThisFileDirectory)Pubsub\pubsub-subscription.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Pubsub\pubsub-topic.py" />
+    <None Include="$(MSBuildThisFileDirectory)Pubsub\pubsub-topic.py.schema" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\no-public-ips-policy.sh" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\set-xpn-subnet-policy.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Examples\ConsolidatedVMLoggingSink.yml" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\no-public-ips-policy.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Scripts\set-xpn-subnet-policy.json" />
+  </ItemGroup>
+</Project>

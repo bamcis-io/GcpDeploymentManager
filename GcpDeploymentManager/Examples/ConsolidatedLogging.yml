@@ -1,0 +1,16 @@
+imports:
+- path: ../Logging/logging.py
+  name: logging.py
+
+resources:
+- name: logging
+  type: logging.py
+  properties:
+    folder-id: "123456789123"
+    topic: "logging-topic"
+    subscription: "splunk-subscription"
+    sink: "logging-sink"
+    include-children: True
+    service-account: "splunk-sa"
+    service-account-display-name: "Splunk Log Viewer"
+    log-filter: "severity>=NOTICE"

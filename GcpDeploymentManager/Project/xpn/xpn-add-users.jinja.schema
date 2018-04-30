@@ -1,0 +1,23 @@
+info: 
+  title: Cross Project Networking Users
+  author: Michael Haken
+  description: Sets the users allowed to access a shared subnet in an organization for XPN
+  version: 1.0.0
+
+required:
+  - subnet-id
+  - xpn-users
+
+properties:
+  subnet-id:
+    type: string
+    description: The id the subnet you are granting access to
+    pattern: ^[a-z0-9][-a-z0-9]{1,253}[a-z0-9]$
+
+  xpn-users:
+    type: array
+    description: The set of users or groups that will be shared subnet users
+    items:
+      type: string
+      description: The user or group that will be a shared vpc admin
+      pattern: ^(?:user|group|serviceAccount):\S+?@\S+?\.[a-zA-Z]{2,}$

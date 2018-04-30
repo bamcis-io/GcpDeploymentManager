@@ -1,0 +1,96 @@
+info: 
+  title: Project/Folder/Org Policies
+  author: Michael Haken
+  description: |
+    Add or removes bindings from a project, folder, or organization policy. This can be either an audit-config
+    or an IAM policy.
+  version: 1.0.0
+
+required:
+  - type
+  - id
+
+properties:
+
+  type:
+    type: string
+    enum:
+    - organization
+    - folder
+    - project
+    description: The type of resource to set the policies on
+
+  id:
+    type: string
+    description: The id of the resource
+
+  depends-on:
+    type: array
+    description: The resource ids this policy update depends on, these will be waited on before performing the get-iam-policy
+    items:
+      type: string
+
+  audit-config:
+    description: The audit config for data access logs to apply to the resource
+    type: array  
+    items:
+      type: object
+      required:
+      - service
+      - auditLogConfigs
+      properties:
+        service:
+          type: string
+          pattern: "(?:allServices|.*)"
+        auditLogConfigs:
+          type: array
+          items:
+            type: object
+            properties:
+              logType:
+                type: string
+                enum:
+                - ADMIN_READ
+                - DATA_READ
+                - DATA_WRITE
+        exemptedMembers:
+          type: array
+          items:
+            type: string
+
+  policy:
+    type: object
+    description: The policies to add and remove to the resource
+    properties:
+      add:
+        type: array
+        items:
+          type: object
+          required:
+          - role
+          - members
+          properties:
+            role:
+              type: string
+              pattern: ^roles/.*$
+            members:
+              type: array
+              items:
+                type: string
+                pattern: ^(?:user|group|serviceAccount|domain):\S+?@\S+?\.[a-zA-Z]{2,}$
+      remove:
+        type: array
+        items:
+          type: object
+          required:
+          - role
+          - members
+          properties:
+            role:
+              type: string
+              pattern: ^roles/.*$
+            members:
+              type: array
+              items:
+                type: string
+                pattern: ^(?:user|group|serviceAccount|domain):\S+?@\S+?\.[a-zA-Z]{2,}$

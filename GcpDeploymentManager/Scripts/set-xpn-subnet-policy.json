@@ -1,0 +1,11 @@
+﻿{
+  "bindings": [
+    {
+      "members": [
+        "group:core-services-subnet-users@example.com"
+      ],
+      "role": "projects/bamcis-xpn-project/roles/compute.SharedNetworkUser"
+    }
+  ],
+  "etag": "BwRibgKedlg="
+}

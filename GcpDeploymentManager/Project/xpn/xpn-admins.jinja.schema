@@ -1,0 +1,23 @@
+info: 
+  title: Cross Project Networking Administrators
+  author: Michael Haken
+  description: Sets the administrators in an organization for XPN
+  version: 1.0.0
+
+required:
+  - organization-id
+  - xpn-admins
+
+properties:
+  organization-id:
+    type: string
+    description: The id of the project that is going to be enabled as a shared vpc host
+    pattern: ^[0-9]{8,25}$
+
+  xpn-admins:
+    type: array
+    description: The set of users or groups that will be shared vpc admins
+    items:
+      type: string
+      description: The user or group that will be a shared vpc admin
+      pattern: ^(?:user|group|serviceAccount):\S+?@\S+?\.[a-zA-Z]{2,}$

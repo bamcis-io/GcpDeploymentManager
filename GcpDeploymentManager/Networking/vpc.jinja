@@ -1,0 +1,8 @@
+resources:
+- name: {{ env["name"] }}
+  type: compute.beta.network
+  properties:
+    autoCreateSubnetworks: {{ properties["auto-create-subnets"] }}
+    description: {{ properties["description"] }}
+    routingConfig:
+      routingMode: {{ properties["routing-mode"] }}

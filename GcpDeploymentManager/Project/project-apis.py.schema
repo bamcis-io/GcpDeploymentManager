@@ -1,0 +1,27 @@
+info: 
+  title: Project API Enabling
+  author: Michael Haken
+  description: Enables a set of APIs in a specified project
+  version: 1.0.0
+
+required:
+- apis
+- project
+- billing
+
+properties:
+  project:
+    type: string
+    description: The project Id to enable the APIs in
+
+  billing:
+    type: string
+    description: >
+	  The billing account id associated with the project. The project must have billing
+      enabled to enable the APIs.
+
+  apis
+    type: array
+    description: The APIs that will be enabled
+    items:
+      type: string

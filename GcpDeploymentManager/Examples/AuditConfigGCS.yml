@@ -1,0 +1,16 @@
+imports:
+- path: ../IAM/policy.py
+  name: policy.py
+
+resources:
+- name: audit-config-gcs
+  type: policy.py
+  properties:
+    type: folder
+    id: '123456789012'
+    audit-config:
+    - service: storage.googlepais.com
+      auditLogConfigs:
+      - logType: ADMIN_READ
+      - logType: DATA_READ
+      - logType: DATA_WRITE

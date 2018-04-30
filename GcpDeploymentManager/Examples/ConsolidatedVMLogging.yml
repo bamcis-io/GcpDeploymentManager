@@ -1,0 +1,12 @@
+imports:
+- path: ../Logging/logging.py
+  name: logging.py
+
+resources:
+- name: vm-logging
+  type: logging.py
+  properties:
+    topic: vm-logging-topic
+    subscription: vm-splunk-subscription
+    service-account: vm-splunk
+    service-account-display-name: VM Log Viewer Service Account

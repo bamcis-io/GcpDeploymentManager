@@ -1,0 +1,117 @@
+info: 
+  title: Project Setup Template
+  author: Michael Haken
+  description: Creates a new GCP project
+  version: 1.0.0
+
+imports:
+  - path: project-apis.py
+    name: api.py
+  - path: ../IAM/service-accounts.py
+    name: sa.py
+
+required:
+  - billing
+
+properties:
+  project-name:
+    type: string
+    description: The name of the project to create. This will also be used as the project id.
+    pattern: ^[a-z0-9][-a-z0-9]{1,253}[a-z0-9]$
+
+  organization-id:
+    type: string
+    description: The ID of the organization that the projects will be under. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  folder-id:
+    type: string
+    description: The ID of the parent folder that the projects will be under. Typically a base-10 string representation of integer.
+    pattern: ^[0-9]{8,25}$
+
+  billing:
+    type: string
+    description: The ID of the billing account to attach to the projects.
+    pattern: ^([a-zA-Z0-9])([-a-zA-Z0-9]+)?([a-zA-Z0-9])$
+
+  project-owner:
+    type: string
+    description: The IAM user that will be the owner of the project
+
+  set-dm-service-account-as-owner:
+    type: boolean
+    description: Sets the deployment manager service account as the owner of the project. This defaults to true.
+    default: true
+
+  service-accounts:
+    type: array
+    items:
+      type: string
+      pattern: ^[a-z]([-a-z0-9]{0,61}[a-z0-9])?$
+
+  iam-policy:
+    description: >
+      The IAM policy to apply to the project. This is optional. The template
+      will automatically add/merge in the service account making the project
+      as an owner.
+    type: object
+    items:
+      required:
+      - bindings
+      properties:
+        bindings:
+          description: >
+            Bindings of members to roles.
+          type: array
+          items:
+            description: >
+              A set of members bound to a particular role.
+            type: object
+            item:
+              required:
+              - role
+              - members
+              role:
+                description: >
+                  The role that all the members will receive.
+                type: string
+                pattern: ^roles/
+              members:
+                decription: >
+                  The members that will be given the permissions in role.
+                type: array
+                item:
+                  type: string
+                  pattern: "^(user|group|domain|serviceAccount):"
+
+  apis:
+    type: array
+    items:
+      type: string
+    default:
+      - compute.googleapis.com
+      - pubsub.googleapis.com
+      - deploymentmanager.googleapis.com
+      - storage-component.googleapis.com
+      - monitoring.googleapis.com
+      - logging.googleapis.com
+
+  concurrent-api-activation:
+    type: boolean
+    description:  >
+      Boolean flag if set to True activates all the requested APIs
+      concurrently. When set to False, the apis are activated serially.
+      Concurrent activation makes for faster deployment but could potentially
+      fail the deployment exceeding the quota limits, make sure to request for
+      adequate quota before using this option. Serial activation tends to be a
+      lot slower.
+    default: false
+
+  bucket-export-settings:
+    description: The specification where to export Compute Logs
+    type: object
+    properties:
+      create-bucket:
+        type: boolean
+      bucket:
+        type: string
